@@ -3,55 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的個人網站</title>
+    <title>Roger's Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="#home">首頁</a></li>
-                <li><a href="#about">關於我</a></li>
-                <li><a href="#projects">專案</a></li>
-                <li><a href="#contact">聯絡方式</a></li>
+                <li><a href="#home"><i class="fas fa-home"></i> 首頁</a></li>
+                <li><a href="#about"><i class="fas fa-user"></i> 關於我</a></li>
+                <li><a href="#skills"><i class="fas fa-code"></i> 技能</a></li>
+                <li><a href="#projects"><i class="fas fa-project-diagram"></i> 專案</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> 聯絡</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="home" class="hero">
-            <h1>歡迎來到我的個人網站</h1>
-            <p>這裡是我分享想法和專案的地方</p>
+            <h1>嗨，我是 Roger</h1>
+            <p>一位熱愛創造的開發者</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
         </section>
 
         <section id="about">
             <h2>關於我</h2>
-            <p>在這裡寫下您的個人簡介...</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>我是一位充滿熱情的開發者，專注於創造優雅且實用的解決方案。我喜歡學習新技術，並將它們應用到實際項目中。</p>
+                    <p>在我的閒暇時間，我喜歡閱讀、寫作和探索新的技術趨勢。</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">年經驗</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">完成專案</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">技術技能</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>技能專長</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>前端開發</h3>
+                    <ul>
+                        <li>HTML5 & CSS3</li>
+                        <li>JavaScript (ES6+)</li>
+                        <li>React.js</li>
+                        <li>Vue.js</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>後端開發</h3>
+                    <ul>
+                        <li>Node.js</li>
+                        <li>Python</li>
+                        <li>SQL</li>
+                        <li>RESTful APIs</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>其他技能</h3>
+                    <ul>
+                        <li>Git</li>
+                        <li>Docker</li>
+                        <li>AWS</li>
+                        <li>UI/UX 設計</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <section id="projects">
-            <h2>我的專案</h2>
+            <h2>精選專案</h2>
             <div class="project-grid">
                 <div class="project-card">
-                    <h3>專案 1</h3>
-                    <p>專案描述...</p>
+                    <h3>專案管理系統</h3>
+                    <p>一個全棧的專案管理工具，使用 React 和 Node.js 構建。</p>
+                    <div class="project-tags">
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>MongoDB</span>
+                    </div>
+                    <a href="#" class="project-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="project-card">
-                    <h3>專案 2</h3>
-                    <p>專案描述...</p>
+                    <h3>電子商務平台</h3>
+                    <p>一個現代化的電子商務網站，具有完整的購物車和支付功能。</p>
+                    <div class="project-tags">
+                        <span>Vue.js</span>
+                        <span>Firebase</span>
+                        <span>Stripe</span>
+                    </div>
+                    <a href="#" class="project-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="project-card">
+                    <h3>個人博客系統</h3>
+                    <p>一個使用 Next.js 構建的現代博客平台，支持 Markdown 寫作。</p>
+                    <div class="project-tags">
+                        <span>Next.js</span>
+                        <span>TypeScript</span>
+                        <span>Tailwind CSS</span>
+                    </div>
+                    <a href="#" class="project-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
 
         <section id="contact">
-            <h2>聯絡方式</h2>
-            <p>電子郵件：your.email@example.com</p>
-            <p>GitHub：<a href="https://github.com/yourusername">yourusername</a></p>
+            <h2>聯絡我</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> your.email@example.com</p>
+                    <p><i class="fas fa-phone"></i> +886 123 456 789</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 台灣，台北市</p>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="您的姓名" required>
+                    <input type="email" placeholder="您的電子郵件" required>
+                    <textarea placeholder="您的訊息" required></textarea>
+                    <button type="submit">傳送訊息</button>
+                </form>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 您的名字. All rights reserved.</p>
+        <p>&copy; 2024 Roger. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">隱私政策</a>
+            <a href="#">使用條款</a>
+        </div>
     </footer>
+
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html> 
