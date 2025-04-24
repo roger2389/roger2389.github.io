@@ -376,6 +376,117 @@ footer::before {
     opacity: 1;
 }
 
+/* 研究領域卡片 */
+.research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.research-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.research-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--gradient);
+}
+
+.research-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.research-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* 技能圖標 */
+.skill-icons {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.skill-icons img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 經歷時間線 */
+.experience-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.timeline-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.timeline-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.timeline-item h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: var(--gradient);
+}
+
+.timeline-item ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+
+.timeline-item li {
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.timeline-item li::before {
+    content: '•';
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+}
+
+/* 訪客計數器 */
+.visitor-counter {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.visitor-counter img {
+    max-width: 200px;
+    height: auto;
+}
+
 /* 響應式設計 */
 @media (max-width: 768px) {
     nav ul {
@@ -411,5 +522,14 @@ footer::before {
 
     .about-stats {
         grid-template-columns: 1fr;
+    }
+
+    .research-grid,
+    .experience-timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-item {
+        margin-bottom: 1.5rem;
     }
 } 

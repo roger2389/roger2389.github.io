@@ -14,8 +14,9 @@
             <ul>
                 <li><a href="#home"><i class="fas fa-home"></i> 首頁</a></li>
                 <li><a href="#about"><i class="fas fa-user"></i> 關於我</a></li>
+                <li><a href="#research"><i class="fas fa-flask"></i> 研究領域</a></li>
                 <li><a href="#skills"><i class="fas fa-code"></i> 技能</a></li>
-                <li><a href="#projects"><i class="fas fa-project-diagram"></i> 專案</a></li>
+                <li><a href="#experience"><i class="fas fa-briefcase"></i> 經歷</a></li>
                 <li><a href="#contact"><i class="fas fa-envelope"></i> 聯絡</a></li>
             </ul>
         </nav>
@@ -23,12 +24,15 @@
 
     <main>
         <section id="home" class="hero">
-            <h1>嗨，我是 Roger</h1>
-            <p>一位熱愛創造的開發者</p>
+            <h1><img src="https://media.giphy.com/media/26Fxy3Iz1ari8oytO/giphy.gif" width="60" alt="Hello"> Hi, I'm Roger!</h1>
+            <p>量化交易與資產配置研究者</p>
             <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="mailto:aad53325489@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/roger2389" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+            <div class="visitor-counter">
+                <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Froger2389&label=VISITORS&labelColor=%23dce775&countColor=%23697689" alt="Visitor Counter">
             </div>
         </section>
 
@@ -36,22 +40,40 @@
             <h2>關於我</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>我是一位充滿熱情的開發者，專注於創造優雅且實用的解決方案。我喜歡學習新技術，並將它們應用到實際項目中。</p>
-                    <p>在我的閒暇時間，我喜歡閱讀、寫作和探索新的技術趨勢。</p>
+                    <p>我是 Roger，目前就讀於國立政治大學碩士班，專注於量化交易與資產配置研究。</p>
+                    <p>我熱衷於將學術研究與實務應用相結合，並持續探索金融科技的新領域。</p>
                 </div>
                 <div class="about-stats">
                     <div class="stat-item">
+                        <span class="stat-number">6+</span>
+                        <span class="stat-label">實習經歷</span>
+                    </div>
+                    <div class="stat-item">
                         <span class="stat-number">3+</span>
-                        <span class="stat-label">年經驗</span>
+                        <span class="stat-label">研究領域</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">20+</span>
-                        <span class="stat-label">完成專案</span>
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">程式技能</span>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label">技術技能</span>
-                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="research">
+            <h2>研究領域</h2>
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3>實證資產配置</h3>
+                    <p>研究不同市場環境下的最優資產配置策略</p>
+                </div>
+                <div class="research-card">
+                    <h3>量化交易策略</h3>
+                    <p>開發和優化基於數據的交易策略</p>
+                </div>
+                <div class="research-card">
+                    <h3>事件驅動交易</h3>
+                    <p>分析市場事件對資產價格的影響</p>
                 </div>
             </div>
         </section>
@@ -60,67 +82,59 @@
             <h2>技能專長</h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>前端開發</h3>
+                    <h3>量化方法</h3>
                     <ul>
-                        <li>HTML5 & CSS3</li>
-                        <li>JavaScript (ES6+)</li>
-                        <li>React.js</li>
-                        <li>Vue.js</li>
+                        <li>📈 因子模型</li>
+                        <li>🤖 機器學習</li>
+                        <li>📊 投資組合優化</li>
+                        <li>📉 時間序列分析</li>
                     </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>後端開發</h3>
-                    <ul>
-                        <li>Node.js</li>
-                        <li>Python</li>
-                        <li>SQL</li>
-                        <li>RESTful APIs</li>
-                    </ul>
+                    <h3>程式語言</h3>
+                    <div class="skill-icons">
+                        <img src="https://skillicons.dev/icons?i=py,r,mysql,latex,git,github" alt="Programming Skills">
+                    </div>
                 </div>
                 <div class="skill-category">
-                    <h3>其他技能</h3>
+                    <h3>專業工具</h3>
                     <ul>
-                        <li>Git</li>
-                        <li>Docker</li>
-                        <li>AWS</li>
-                        <li>UI/UX 設計</li>
+                        <li>📊 Bloomberg Terminal</li>
+                        <li>📈 TradingView</li>
+                        <li>💻 Jupyter Notebook</li>
+                        <li>📑 LaTeX</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <section id="projects">
-            <h2>精選專案</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>專案管理系統</h3>
-                    <p>一個全棧的專案管理工具，使用 React 和 Node.js 構建。</p>
-                    <div class="project-tags">
-                        <span>React</span>
-                        <span>Node.js</span>
-                        <span>MongoDB</span>
-                    </div>
-                    <a href="#" class="project-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
+        <section id="experience">
+            <h2>經歷</h2>
+            <div class="experience-timeline">
+                <div class="timeline-item">
+                    <h3>學術經歷</h3>
+                    <ul>
+                        <li>國立政治大學 碩士生</li>
+                        <li>國立中山大學 學士</li>
+                    </ul>
                 </div>
-                <div class="project-card">
-                    <h3>電子商務平台</h3>
-                    <p>一個現代化的電子商務網站，具有完整的購物車和支付功能。</p>
-                    <div class="project-tags">
-                        <span>Vue.js</span>
-                        <span>Firebase</span>
-                        <span>Stripe</span>
-                    </div>
-                    <a href="#" class="project-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
+                <div class="timeline-item">
+                    <h3>專業經歷</h3>
+                    <ul>
+                        <li>SQM technologies 量化實習生</li>
+                        <li>PSC 量化實習生</li>
+                        <li>MBQ 量化實習生</li>
+                        <li>EDGE Quantitative Trading 量化實習生</li>
+                        <li>TEJ 量化實習生</li>
+                        <li>Crypto Arsenal 量化實習生</li>
+                    </ul>
                 </div>
-                <div class="project-card">
-                    <h3>個人博客系統</h3>
-                    <p>一個使用 Next.js 構建的現代博客平台，支持 Markdown 寫作。</p>
-                    <div class="project-tags">
-                        <span>Next.js</span>
-                        <span>TypeScript</span>
-                        <span>Tailwind CSS</span>
-                    </div>
-                    <a href="#" class="project-link">查看詳情 <i class="fas fa-arrow-right"></i></a>
+                <div class="timeline-item">
+                    <h3>社團經歷</h3>
+                    <ul>
+                        <li>Jams Capital 投資組合管理團隊 研究員</li>
+                        <li>TMBA 演算法交易團隊 導師</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -129,9 +143,9 @@
             <h2>聯絡我</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <p><i class="fas fa-envelope"></i> your.email@example.com</p>
-                    <p><i class="fas fa-phone"></i> +886 123 456 789</p>
-                    <p><i class="fas fa-map-marker-alt"></i> 台灣，台北市</p>
+                    <p><i class="fas fa-envelope"></i> aad53325489@gmail.com</p>
+                    <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/">LinkedIn</a></p>
+                    <p><i class="fab fa-github"></i> <a href="https://github.com/roger2389">GitHub</a></p>
                 </div>
                 <form class="contact-form">
                     <input type="text" placeholder="您的姓名" required>
@@ -144,7 +158,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 Roger. All rights reserved.</p>
+        <p>&copy; 2024 Roger Chen. All rights reserved.</p>
         <div class="footer-links">
             <a href="#">隱私政策</a>
             <a href="#">使用條款</a>
