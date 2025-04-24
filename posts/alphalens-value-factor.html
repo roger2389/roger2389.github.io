@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用 Alphalens 剖析因子表現，價值因子篇 - Roger's Blog</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .article-meta img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .author-info .author-name {
+            font-weight: 500;
+            color: #333;
+        }
+        .read-time {
+            margin-left: auto;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+        .tag {
+            background: #f0f0f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #666;
+            text-decoration: none;
+        }
+        .tag:hover {
+            background: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../index.html">首頁</a></li>
+                <li><a href="../archive.html">文章列表</a></li>
+                <li><a href="../about.html">關於我</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="post-content">
+            <header class="post-header">
+                <h1>用 Alphalens 剖析因子表現，價值因子篇</h1>
+                <div class="article-meta">
+                    <img src="../images/avatar.jpg" alt="Roger">
+                    <div class="author-info">
+                        <span class="author-name">Roger</span>
+                        <span class="post-date">Apr 4, 2025</span>
+                    </div>
+                    <span class="read-time">9 min read</span>
+                </div>
+            </header>
+
+            <h2>本文重點概要</h2>
+            <ul>
+                <li>Alphalens 基礎介紹以及價值因子簡介</li>
+                <li>合成價值因子並利用 Alphalens 分析因子表現</li>
+            </ul>
+
+            <h2>前言</h2>
+            <p>在投資世界中，無論是經驗豐富的專業交易員，還是剛踏入市場的投資新手，因子策略都是一個無法忽視的重要工具。因子策略的精髓在於透過量化分析，將市場中複雜的變動簡化為關鍵驅動因素，幫助投資者捕捉市場趨勢並進一步提升投資效率。這些因子不僅可以用來分析市場的行為邏輯，也能成為制定資產配置和風險管理策略的可靠依據。</p>
+            
+            <p>本系列文章將利用 Alphalens 來分析多種因子在市場中的應用與效果。在先前文章中，我們已完成對「外資因子」的分析，解析了外資資金對市場的影響；本篇文章將聚焦於「價值因子」，探討這些與企業估值相關的指標如何揭示內在價值，並影響資產的長期回報；而最後一篇文章將會探討「價量因子」，進一步了解價格與交易量間的關聯性與投資機會。</p>
+
+            <p>值得一提的是，若您想進行相似的因子分析，可以利用 TQuant Lab 中的 alphalens-tej 工具。該工具不僅可以整合 TEJ 數據，還能免去繁瑣的資料處理過程，讓您輕鬆檢視因子表現，進一步支援投資策略開發。</p>
+
+            <h2>價值因子是什麼</h2>
+            <p>在投資市場中，價值因子是衡量資產內在價值的重要工具，通常與企業的基本面指標相關，如市盈率（P/E）、市淨率（P/B）、股息收益率（Dividend Yield）等。這些指標反映了市場對企業未來成長性和盈利能力的預期，並被廣泛用於判斷資產是否被低估或高估。將價值因子應用於投資策略時，投資者可以分析不同企業的估值差異，並透過持有相對便宜的資產，實現潛在的超額收益。</p>
+
+            <h3>本文使用因子</h3>
+            <h4>BPROE_quantile</h4>
+            <p>計算公式如下：</p>
+            <ul>
+                <li>PB倒數排名：根據每支股票的PB進行分位數百分比排名，然後取排名的倒數。</li>
+                <li>ROE排名：根據每支股票的ROE進行分位數百分比排名。</li>
+                <li>兩者相加：將PB倒數排名和ROE的排名加總，得到最終的綜合因子值。</li>
+            </ul>
+
+            <h4>市盈率歸母倒數</h4>
+            <p>計算公式如下：</p>
+            <p>公司市值除以母公司淨利再取倒數</p>
+
+            <p>本文使用的 PB 與市值資料分別取自 TEJAPI「交易資料-股價資料」資料表（TWN/APIPRCD）中的「股價淨值比」與「個股市值(元)」欄位；而 ROE 與母公司淨利資料分別取自 TEJAPI「財務資料_會計師簽證財務資料」資料表（TWN/AINVFQ1）中的「常續 ROE」與「母公司淨利」欄位，財務資料的期間別皆為 TTM（移動四季）。</p>
+
+            <h3>Alphalens 基礎介紹</h3>
+            <p>TQuant Lab 中的 Alphalens-tej 套件是一個專為因子分析所設計的 Python 工具包。其核心功能是幫助投資者檢視並評估因子的表現，進而更有效地制定因子策略，詳細介紹可以參考 Alphalens.ipynb。在量化投資中，因子是一種用於解釋和預測資產收益的指標，常見因子包括市盈率、股價動量、交易量等。</p>
+
+            <p>Alphalens 提供了一系列強大的視覺化工具和指標，如因子分位數的平均報酬率（Mean Period Wise Return by Factor Quantile）、資訊比率（IC，Information Coefficient）、累積報酬率（Cumulative Returns by Quantile）等。這些功能可以幫助我們深入理解因子的預測能力和穩定性。透過 Alphalens，投資者可以輕鬆分析各類因子在不同市場條件下的表現，並找到最適合自己的因子組合成策略。此外，Alphalens 與 TEJ 數據整合良好，特別適合使用 TQuant Lab 進行因子回測和視覺化分析，使因子研究更加便捷高效。</p>
+
+            <h3>單因子分析</h3>
+            <p>因篇幅限制，本節只計算因子的 IC、IR（Information Ratio，即風險調整後 IC）以及繪製各因子分位數的平均報酬率柱狀圖。本文的樣本期間都是 2014 至 2024 年，股票池皆為上市櫃股票中前 100 大市值的股票。</p>
+
+            <h4>各因子的 IC、IR 值與因子值加權的平均報酬率（持有期間為 1天、5天、10天、21天）</h4>
+            <ul>
+                <li><strong>Mean Return</strong>：此欄顯示因子值加權投資組合的平均報酬率。正值表示該因子在持有期內的整體表現呈現正報酬。</li>
+                <li><strong>IC Mean</strong>：IC 均值，反映因子值與資產回報率之間的相關性。正的 IC Mean 表示因子值與資產回報之間存在正相關，負值則為反相關。通常，IC Mean 絕對值越高，因子的預測能力越強。</li>
+                <li><strong>IC_Std</strong>：IC 的標準差，表示 IC 值的波動性。較高的 IC_Std 表明該因子的預測穩定性較低，而較低的 IC Std 表示 IC 值的波動較小，預測更穩定。</li>
+                <li><strong>IR</strong>：IR 是 IC Mean 除以 IC_Std 的比值，反映了因子的風險調整後表現。IR 絕對值越高表示該因子在預測資產回報方面具有更高的穩定性和可靠性。</li>
+                <li><strong>IC > 0.03</strong>：此欄表示因子的 IC 絕對值大於 0.03 的比例。這個比例越高，表示因子具有穩定相關性的機率越高，有助於確認該因子在不同時間點的預測效能。</li>
+            </ul>
+
+            <p>從「各因子的 IC、IR 值與因子值加權的平均報酬率」表格來看，這兩個因子在大多數持有期間的 IC、IR 表現均不如預期。一般而言，IC 值大於 0.05 和 IR 值大於 0.3 的因子，才可被視為具有良好的預測能力。然而，這兩個因子的數值僅在持有期為 21 天時達到此標準，顯示其與資產報酬之間的相關性僅在較長的持有期內才較為明顯。此外，從表格中也可觀察到「BPROE_quantile」的整體預測能力優於「市盈率歸母倒數」，因其 IC、IR 值均較高。</p>
+
+            <p>在「因子分位數的平均報酬率柱狀圖」中，「BPROE_quantile」並未展現出明顯的單調性，尤其是在中間分位數的表現較為混亂，顯示其單調性不夠顯著。而「市盈率歸母倒數」因子在高分位數呈現穩定且顯著的上升趨勢，但在低分位數組的單調性則不夠明確。所以這兩個因子的平均報酬率單調性均不夠一致。</p>
+
+            <h3>因子合成</h3>
+            <p>在上一節中，我們發現「BPROE_quantile」與「市盈率歸母倒數」在較大的持有期之下有較為理想的IC值，但在不同分組間的單調性不夠一致。本節將進一步嘗試將這兩個因子進行合成，並探討合成後是否能進一步提升其預測能力。</p>
+
+            <h4>計算因子權重</h4>
+            <p>在合成多個因子時，由於不同因子對未來報酬的解釋力不盡相同，因此需要設定適當的因子權重，以提升預測效果與穩定性。</p>
+
+            <p>本文利用 rank IC_IR 來計算因子權重，rank IC_IR 利用個別因子近一個月的 IR 比率除以兩個因子 IR 比率的總和，從而得出該因子的相對權重。這種基於風險調整後 IC 的權重計算方法，將更具預測能力且穩定的因子賦予更大的權重。為了模擬實際交易中的因子訊號延遲，我們對最終的權重數據進行滯後移動（shift），將權重移動 1 天，以確保只使用前一期的數據，避免在模型中使用未來資訊。</p>
+
+            <h4>因子合成方法</h4>
+            <p>計算綜合因子的方法是通過將每個因子根據其權重進行加權平均，生成一個代表整體因子效果的綜合因子。</p>
+
+            <h4>合成因子分析</h4>
+            <p>從「綜合因子的 IC、IR 值與因子值加權的平均報酬率」表格可以看出，綜合因子在 IC、IR 以及平均報酬率方面均略優於原本的兩個單一因子。尤其是在持有期為 21 天時，績效表現有明顯提升，不僅 IC 超過 0.07，IR 也突破 0.4。</p>
+
+            <p>此外，從「分位數平均報酬率柱狀圖」中可以發現，綜合因子在各分組間展現出更為明顯的單調遞增效果，相較於單獨使用個別因子，表現更加穩定且優異。</p>
+
+            <h3>結論</h3>
+            <p>透過本文的分析，我們展示了如何運用 Alphalens 檢視價值因子的表現，並將其應用於實際的投資策略中。本次分析的兩個價值因子分別為「市盈率歸母倒數」和「BPROE_quantile」。從單因子的 IC 和 IR 分析結果來看，這兩個因子的預測能力僅在持有期為 21 天時表現較為顯著。</p>
+
+            <p>在綜合因子的分析中，我們透過對這兩個價值因子進行加權合成，並觀察到綜合因子在預測能力和單調性方面均有所提升，尤其在持有期為 21 天時效果最為明顯。根據以上結果，後續可考慮以綜合因子搭配 21 天的持有期來建立投資策略。</p>
+
+            <p>整體而言，本文展示了從單一價值因子分析到綜合因子的構建與回測的完整流程。在未來的應用中，我們可以考慮引入更多價值因子及不同的權重計算方法，以提升加權融合的效益，並納入滑價、手續費等交易成本的考量，以進一步檢視策略的真實可行性。透過這些改進，多因子策略將更能應對市場波動，在動態的市場環境中持續創造價值。</p>
+
+            <div class="tags">
+                <a href="#" class="tag">Quantitative Finance</a>
+                <a href="#" class="tag">Alpha</a>
+                <a href="#" class="tag">Quantitative Research</a>
+                <a href="#" class="tag">Quantitative Strategies</a>
+                <a href="#" class="tag">Backtesting</a>
+            </div>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Roger's Blog</p>
+        <div class="footer-links">
+            <a href="../index.html">首頁</a>
+            <a href="../archive.html">文章列表</a>
+            <a href="../about.html">關於我</a>
+        </div>
+    </footer>
+</body>
+</html> 
