@@ -210,6 +210,77 @@
                 padding: 1.5rem;
             }
         }
+
+        .certifications ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        .certifications li {
+            margin: 0.5rem 0;
+            padding: 0.5rem 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .experience-highlights,
+        .community-involvement,
+        .skills-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 2rem;
+        }
+
+        .experience-highlights li,
+        .community-involvement li,
+        .skills-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .experience-highlights li:before,
+        .community-involvement li:before,
+        .skills-list li:before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .career-objective {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-content {
+                font-size: 1rem;
+            }
+            
+            .career-objective {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -224,6 +295,7 @@
                 <a href="https://github.com/roger2389" target="_blank"><i class="fab fa-github"></i></a>
                 <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" target="_blank"><i class="fab fa-linkedin"></i></a>
                 <a href="mailto:aad53325489@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://medium.com/@aad53325489" target="_blank"><i class="fab fa-medium"></i></a>
                 <a href="https://drive.google.com/file/d/1Qsm1zQCbbe_qtUKkvVdzRn6InA94txsg/view?usp=drive_link" target="_blank"><i class="fas fa-file-alt"></i></a>
             </div>
         </div>
@@ -231,95 +303,60 @@
             <ul>
                 <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="posts.html"><i class="fas fa-pen"></i> Post</a></li>
+                <li><a href="about.html"><i class="fas fa-user"></i> About</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
         <section class="section">
-            <h2>Education</h2>
-            <div class="education-item">
-                <div class="item-header">
-                    <div class="item-title">National Chengchi University</div>
-                    <div class="item-period">Sep 2023 - Jun 2025</div>
-                </div>
-                <div class="item-subtitle">MS Money and Banking majored in Financial Engineering</div>
-                <div class="item-gpa">GPA/Percentage: 4/4.3</div>
-                <div class="courses">
-                    <strong>Relevant Courses:</strong> Financial Econometrics, Quantitative Methods in Finance, Option-Valuation and Application, Finance and Risk Management of Financial Institutions, Introduction to Financial Technology, Financial Computing with Programming Application
-                </div>
-            </div>
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>
+                    I am a passionate quantitative researcher with a deep interest in systematic trading strategies and factor investing. Currently pursuing my Master's degree in Finance at National Chengchi University, I focus on developing and optimizing multi-factor investment strategies for the Taiwan equity market.
+                </p>
+                
+                <p>
+                    My research interests lie at the intersection of quantitative finance and data science, with a particular emphasis on factor investing, machine learning applications, and market microstructure analysis. Through my academic work and internships, I've developed a comprehensive understanding of various market phenomena and their implications for systematic trading strategies.
+                </p>
 
-            <div class="education-item">
-                <div class="item-header">
-                    <div class="item-title">National Sun Yat Sen University</div>
-                    <div class="item-period">Sep 2019 - Jun 2023</div>
-                </div>
-                <div class="item-subtitle">BA Financial Management</div>
-                <div class="item-gpa">GPA/Percentage: 3.8/4.3</div>
-                <div class="courses">
-                    <strong>Relevant Courses:</strong> Introduction of Financial Engineering, Financial Engineering and Innovation, Financial data Analysis and Trading strategy, Macroeconomic and Policy Analysis, Financial Market Theory and Practice
-                </div>
-            </div>
-        </section>
+                <p>
+                    My professional journey includes diverse quantitative research experiences across multiple firms:
+                </p>
+                <ul class="experience-highlights">
+                    <li>SQM Technologies - Developed factor-based strategies and machine learning models for equity trading</li>
+                    <li>President Securities Corp - Utilizing Machine Learning Model to Determine Asset Strength and Weakness.</li>
+                    <li>MBQ - Research index enhancement strategies and monitor signals to report to investors</li>
+                    <li>EDGE Quantitative Trading - Developed futures trading strategies and backtesting frameworks</li>
+                    <li>TEJ - Built quantitative analysis tools and factor research platforms</li>
+                    <li>Crypto Arsenal - Researching cryptocurrency CTA strategies and optimizing backtesting to develop
+                        strategies deployable on exchanges.</li>
+                </ul>
 
-        <section class="section">
-            <h2>Professional & Societies</h2>
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">SQM technologies</div>
-                    <div class="item-period">Present</div>
-                </div>
-                <div class="item-subtitle">Quantitative Intern</div>
-            </div>
+                <p>
+                    Beyond individual research, I actively contribute to the quantitative finance community:
+                </p>
+                <ul class="community-involvement">
+                    <li>Lead Researcher at Jams Capital Portfolio Management Team, focusing on systematic strategy development</li>
+                    <li>Mentor at TMBA Algorithm Trading Team, guiding strategy research and implementation</li>
+                    <li>Regular contributor to quantitative research publications and academic discussions</li>
+                </ul>
 
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">President Securities Corp (PSC)</div>
-                </div>
-                <div class="item-subtitle">Quantitative Intern</div>
-            </div>
+                <p>
+                    Core Competencies:
+                </p>
+                <ul class="skills-list">
+                    <li>Systematic Trading Strategy Development</li>
+                    <li>Factor Research and Portfolio Construction</li>
+                    <li>Machine Learning in Financial Markets</li>
+                    <li>Market Microstructure Analysis</li>
+                    <li>Alternative Data Research</li>
+                    <li>Risk Management and Portfolio Optimization</li>
+                </ul>
 
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">MBQ</div>
-                </div>
-                <div class="item-subtitle">Quantitative Intern</div>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">EDGE Quantitative Trading</div>
-                </div>
-                <div class="item-subtitle">Quantitative Intern</div>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">TEJ</div>
-                </div>
-                <div class="item-subtitle">Quantitative Intern</div>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">Crypto Arsenal</div>
-                </div>
-                <div class="item-subtitle">Quantitative Intern</div>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">Jams Capital Portfolio Management Team</div>
-                </div>
-                <div class="item-subtitle">Team Researcher</div>
-            </div>
-
-            <div class="experience-item">
-                <div class="item-header">
-                    <div class="item-title">TMBA Algorithm Trading Team</div>
-                </div>
-                <div class="item-subtitle">Team Mentor</div>
+                <p class="career-objective">
+                    My career objective is to become a distinguished Quantitative Researcher and Trader, combining rigorous academic research with practical trading implementation. I am particularly interested in roles that allow me to develop innovative systematic trading strategies while contributing to the advancement of quantitative finance methodologies.
+                </p>
             </div>
         </section>
     </div>
