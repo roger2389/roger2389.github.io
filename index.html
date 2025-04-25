@@ -4,9 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roger Chen - Quantitative Trading Intern</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .profile-header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid white;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons {
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .education-item, .experience-item {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .education-item:hover, .experience-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .item-period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .item-subtitle {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-gpa {
+            color: #10b981;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .courses {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .courses strong {
+            color: var(--text-primary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,254 +220,107 @@
             <h1>Roger Chen</h1>
             <p class="subtitle">Quantitative Trading Intern @ President Securities Corp | M.S. student @ NCCU</p>
             <div class="social-icons">
-                <a href="https://github.com/roger2389" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.com/@aad53325489" target="_blank" aria-label="Medium"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/roger2389" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:aad53325489@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
         <nav>
             <ul>
-                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="posts.html"><i class="fas fa-pen"></i> Post</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section id="about-page" class="page-content">
-            <h1>About Me</h1>
-            <div class="about-intro">
-                <p>Hello! I'm Roger, a dedicated quantitative professional with a strong background honed through academic pursuits and diverse internship experiences. My passion lies at the intersection of finance, mathematics, and technology, driving me towards a career as a Quantitative Trader and Researcher.</p>
-                
-                <p>Currently pursuing a Master's degree at National Chengchi University (NCCU), I am deepening my expertise in quantitative trading strategies and empirical asset allocation. My academic foundation was built during my Bachelor's studies at National Sun Yat-sen University.</p>
-                
-                <p>Throughout my journey, I've had the privilege of interning at various reputable firms, including SQM Technologies, PSC, MBQ, EDGE Quantitative Trading, TEJ, and Crypto Arsenal. These experiences provided invaluable insights into real-world quantitative applications, from developing factor models and machine learning algorithms to optimizing portfolios and analyzing time-series data.</p>
-                
-                <p>Beyond technical skills, I've actively contributed to the quantitative community, serving as a Team Researcher at the Jams Capital Portfolio Management Team and a Team Mentor at the TMBA Algorithm Trading Team. I am constantly seeking opportunities to learn, innovate, and contribute to the evolving field of quantitative finance.</p>
-            </div>
-
-            <div class="skills-section">
-                <h2><img src="https://media.giphy.com/media/UVG0BN8TOMKkPOJS6e/giphy.gif" width="40">&nbsp;Skills & Expertise</h2>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3>📊 Quantitative</h3>
-                        <ul>
-                            <li>Factor Modeling</li>
-                            <li>Portfolio Optimization</li>
-                            <li>Time-Series Analysis</li>
-                            <li>Statistical Arbitrage</li>
-                        </ul>
-                    </div>
-                    <div class="skill-category">
-                        <h3>💻 Technical</h3>
-                        <div class="tech-icons">
-                            <img src="https://skillicons.dev/icons?i=py,r,mysql,latex,git,github" alt="Technical Skills" />
-                        </div>
-                    </div>
-                    <div class="skill-category">
-                        <h3>🔬 Research</h3>
-                        <ul>
-                            <li>Empirical Asset Allocation</li>
-                            <li>Event-Driven Strategies</li>
-                            <li>Machine Learning in Finance</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="contact-section">
-                <h2>📫 Get in Touch</h2>
-                <div class="contact-grid">
-                    <a href="mailto:aad53325489@gmail.com" class="contact-item">
-                        <img src="https://img.shields.io/badge/Email%20Me-EA4335?logo=Gmail&logoColor=white&style=for-the-badge" alt="Email Me" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" class="contact-item">
-                        <img src="https://img.shields.io/badge/My%20Linkedin-%230077B5?logo=linkedin&logoColor=white&style=for-the-badge" alt="My LinkedIn" />
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <style>
-            .timeline-section {
-                margin: 2rem 0;
-                padding: 0 1rem;
-            }
-            
-            .timeline-section h2 {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-                color: #2c3e50;
-                border-bottom: 3px solid #3498db;
-                padding-bottom: 0.5rem;
-                display: inline-block;
-            }
-            
-            .timeline-item {
-                position: relative;
-                padding: 1rem 1.5rem;
-                border-left: 2px solid #3498db;
-                margin-bottom: 1.5rem;
-                transition: all 0.3s ease;
-            }
-            
-            .timeline-item:hover {
-                transform: translateX(10px);
-                background: rgba(52, 152, 219, 0.05);
-            }
-            
-            .timeline-item::before {
-                content: '';
-                position: absolute;
-                left: -8px;
-                top: 1.5rem;
-                width: 14px;
-                height: 14px;
-                border-radius: 50%;
-                background: #fff;
-                border: 2px solid #3498db;
-            }
-            
-            .timeline-item.current::before {
-                background: #3498db;
-            }
-            
-            .timeline-content {
-                margin-left: 1rem;
-            }
-            
-            .timeline-title {
-                font-size: 1.1rem;
-                color: #2c3e50;
-                margin-bottom: 0.5rem;
-                font-weight: 600;
-            }
-            
-            .timeline-period {
-                font-size: 0.9rem;
-                color: #7f8c8d;
-                margin-bottom: 0.5rem;
-            }
-            
-            .timeline-org {
-                font-size: 0.95rem;
-                color: #34495e;
-                font-style: italic;
-            }
-        </style>
-
-        <section id="education" class="timeline-section">
+    <div class="container">
+        <section class="section">
             <h2>Education</h2>
-            <div class="timeline-items">
-                <div class="timeline-item current">
-                    <div class="timeline-content">
-                        <div class="timeline-title">National Chengchi University</div>
-                        <div class="timeline-org">MS Money and Banking majored in Financial Engineering</div>
-                        <div class="timeline-period">Sep 2023 - Jun 2025</div>
-                        <div class="timeline-gpa">CGPA/Percentage: 4/4.3</div>
-                        <div class="timeline-courses">
-                            <strong>Relevant Courses:</strong> Financial Econometrics, Quantitative Methods in Finance, Option-Valuation and Application, Finance and Risk Management of Financial Institutions, Introduction to Financial Technology, Financial Computing with Programming Application
-                        </div>
-                    </div>
+            <div class="education-item">
+                <div class="item-header">
+                    <div class="item-title">National Chengchi University</div>
+                    <div class="item-period">Sep 2023 - Jun 2025</div>
                 </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">National Sun Yat Sen University</div>
-                        <div class="timeline-org">BA Financial Management</div>
-                        <div class="timeline-period">Sep 2019 - Jun 2023</div>
-                        <div class="timeline-gpa">CGPA/Percentage: 3.8/4.3</div>
-                        <div class="timeline-courses">
-                            <strong>Relevant Courses:</strong> Introduction of Financial Engineering, Financial Engineering and Innovation, Financial data Analysis and Trading strategy, Macroeconomic and Policy Analysis, Financial Market Theory and Practice
-                        </div>
-                    </div>
+                <div class="item-subtitle">MS Money and Banking majored in Financial Engineering</div>
+                <div class="item-gpa">CGPA/Percentage: 4/4.3</div>
+                <div class="courses">
+                    <strong>Relevant Courses:</strong> Financial Econometrics, Quantitative Methods in Finance, Option-Valuation and Application, Finance and Risk Management of Financial Institutions, Introduction to Financial Technology, Financial Computing with Programming Application
+                </div>
+            </div>
+
+            <div class="education-item">
+                <div class="item-header">
+                    <div class="item-title">National Sun Yat Sen University</div>
+                    <div class="item-period">Sep 2019 - Jun 2023</div>
+                </div>
+                <div class="item-subtitle">BA Financial Management</div>
+                <div class="item-gpa">CGPA/Percentage: 3.8/4.3</div>
+                <div class="courses">
+                    <strong>Relevant Courses:</strong> Introduction of Financial Engineering, Financial Engineering and Innovation, Financial data Analysis and Trading strategy, Macroeconomic and Policy Analysis, Financial Market Theory and Practice
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="timeline-section">
+        <section class="section">
             <h2>Professional & Societies</h2>
-            <div class="timeline-items">
-                <div class="timeline-item current">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Quantitative Intern</div>
-                        <div class="timeline-org">SQM technologies</div>
-                        <div class="timeline-period">Present</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">SQM technologies</div>
+                    <div class="item-period">Present</div>
                 </div>
+                <div class="item-subtitle">Quantitative Intern</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Quantitative Intern</div>
-                        <div class="timeline-org">PSC</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">President Securities Corp (PSC)</div>
                 </div>
+                <div class="item-subtitle">Quantitative Intern</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Quantitative Intern</div>
-                        <div class="timeline-org">MBQ</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">MBQ</div>
                 </div>
+                <div class="item-subtitle">Quantitative Intern</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Quantitative Intern</div>
-                        <div class="timeline-org">EDGE Quantitative Trading</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">EDGE Quantitative Trading</div>
                 </div>
+                <div class="item-subtitle">Quantitative Intern</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Quantitative Intern</div>
-                        <div class="timeline-org">TEJ</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">TEJ</div>
                 </div>
+                <div class="item-subtitle">Quantitative Intern</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Quantitative Intern</div>
-                        <div class="timeline-org">Crypto Arsenal</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">Crypto Arsenal</div>
                 </div>
+                <div class="item-subtitle">Quantitative Intern</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Team Researcher</div>
-                        <div class="timeline-org">Jams Capital Portfolio Management Team</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">Jams Capital Portfolio Management Team</div>
                 </div>
+                <div class="item-subtitle">Team Researcher</div>
+            </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-title">Team Mentor</div>
-                        <div class="timeline-org">TMBA Algorithm Trading Team</div>
-                    </div>
+            <div class="experience-item">
+                <div class="item-header">
+                    <div class="item-title">TMBA Algorithm Trading Team</div>
                 </div>
+                <div class="item-subtitle">Team Mentor</div>
             </div>
         </section>
-
-        <style>
-            .timeline-gpa {
-                font-size: 0.9rem;
-                color: #2ecc71;
-                margin: 0.5rem 0;
-                font-weight: 500;
-            }
-            
-            .timeline-courses {
-                font-size: 0.9rem;
-                color: #34495e;
-                margin-top: 0.5rem;
-                line-height: 1.4;
-            }
-            
-            .timeline-courses strong {
-                color: #2c3e50;
-            }
-        </style>
-
-    </main>
+    </div>
 
     <footer>
         <p>&copy; 2024 - 2025 Roger Chen</p>
