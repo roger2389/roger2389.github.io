@@ -597,7 +597,7 @@ def parallel_fitness_calculation(population, returns, n_processes=4):
 
                 <h2>八、研究成果展示</h2>
                 <h3>1. 挖掘出的優質因子範例</h3>
-                <p>以下是系統挖掘出的部分高IC值因子，按照IC值大小排序：</p>
+                <p>以下是系統挖掘出的部分高CAGR因子，按照CAGR值大小排序：</p>
                 
                 <div class="code-block">
                     <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
@@ -776,7 +776,6 @@ def parallel_fitness_calculation(population, returns, n_processes=4):
                         <ul>
                             <li>樣本內最大回撤僅-12.98%</li>
                             <li>樣本外最大回撤-14.06%，與樣本內相近，顯示風險特徵的一致性</li>
-                            <li>單利MDD(%)分別為-2.61%和-6.23%，體現良好的日常風險控制</li>
                         </ul>
                     </li>
                 </ul>
@@ -795,10 +794,9 @@ def parallel_fitness_calculation(population, returns, n_processes=4):
                 <h3>4. 策略特點總結</h3>
                 <div class="note">
                     <ul>
-                        <li><strong>強健性</strong>：樣本外表現雖有所下降但仍維持優異水準，顯示策略具有良好的魯棒性</li>
+                        <li><strong>強健性</strong>：樣本外表現雖有所下降但仍維持優異水準，顯示策略具有良好的rubustness</li>
                         <li><strong>風險控制</strong>：最大回撤控制在15%以內，且單利回撤更小，顯示策略具有良好的風險管理能力</li>
                         <li><strong>穩定性</strong>：高勝率、理想盈虧比以及各時間週期的穩定表現，都支持策略的可持續性</li>
-                        <li><strong>實用性</strong>：總樣本數3750，提供了充分的統計顯著性，策略結果具有較高的可信度</li>
                     </ul>
                 </div>
             </article>
