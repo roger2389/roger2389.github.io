@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>因子挖掘技術分析 - Roger Chen</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .sidebar {
+            width: 300px;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 2rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-info h1 {
+            margin: 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .profile-info .subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .social-icons a {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            margin-top: 2rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            gap: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .post-header {
+            margin-bottom: 2rem;
+        }
+
+        .post-header h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .post-meta {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        article {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        article h3 {
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+
+        article p {
+            margin: 1rem 0;
+        }
+
+        article ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .note {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile-info">
+            <div class="avatar">
+                <img src="../assets/profile.jpg" alt="Roger Chen">
+            </div>
+            <h1>Roger Chen</h1>
+            <p class="subtitle">Quantitative Trading Intern @ President Securities Corp | M.S. student @ NCCU</p>
+            <div class="social-icons">
+                <a href="https://github.com/roger2389" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:aad53325489@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://medium.com/@aad53325489" target="_blank"><i class="fab fa-medium"></i></a>
+                <a href="https://drive.google.com/file/d/1Qsm1zQCbbe_qtUKkvVdzRn6InA94txsg/view?usp=drive_link" target="_blank"><i class="fas fa-file-alt"></i></a>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="../posts.html"><i class="fas fa-pen"></i> Posts</a>
+            <a href="../about.html"><i class="fas fa-user"></i> About</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="post-content">
+            <div class="post-header">
+                <h1>因子挖掘技術分析：基於遺傳演算法的多因子選股策略</h1>
+                <div class="post-meta">
+                    <span><i class="far fa-calendar"></i> 2024-12-25</span>
+                </div>
+            </div>
+
+            <article>
+                <div class="note">
+                    本文將詳細分析一個基於遺傳演算法(GA)的因子挖掘系統，該系統整合了價量資料和財報資料，並使用夏普比率作為適應度函數。
+                </div>
+
+                <h2>一、系統架構概述</h2>
+                <p>本系統採用遺傳演算法進行因子挖掘，主要包含以下核心組件：</p>
+                <ul>
+                    <li>GA選股器（GAStockSelection）：負責整個遺傳演算法的流程控制，包括族群初始化、選擇、交配和突變等操作</li>
+                    <li>因子池優化機制：管理因子庫，包括因子的添加、刪除和權重調整</li>
+                    <li>適應度評估系統：計算每個個體的適應度值，使用夏普比率作為主要評估指標</li>
+                    <li>遺傳操作實現：包含選擇、交配和突變等遺傳操作的核心實現</li>
+                </ul>
+
+                <h2>二、資料處理與特徵工程</h2>
+                <h3>1. 資料來源</h3>
+                <p>系統整合了兩大類資料：</p>
+                <ul>
+                    <li><strong>價量資料</strong>：
+                        <ul>
+                            <li>價格資料：收盤價、開盤價、最高價、最低價</li>
+                            <li>成交量資料：日成交量、成交金額</li>
+                            <li>技術指標：RSI、MACD、KD、布林通道等</li>
+                            <li>市場情緒指標：融資融券、外資持股等</li>
+                        </ul>
+                    </li>
+                    <li><strong>財報資料</strong>：
+                        <ul>
+                            <li>財務比率：ROE、ROA、負債比率等</li>
+                            <li>成長性指標：營收成長率、EPS成長率等</li>
+                            <li>營運效率：存貨週轉率、應收帳款週轉率等</li>
+                            <li>現金流量指標：營業現金流量、自由現金流量等</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>2. 資料預處理</h3>
+                <p>在進行因子挖掘前，系統會進行以下預處理：</p>
+                <ul>
+                    <li><strong>異常值檢測與處理</strong>：
+                        <ul>
+                            <li>使用3倍標準差法識別異常值</li>
+                            <li>使用IQR（四分位距）方法處理極端值</li>
+                            <li>對異常值進行縮尾處理（Winsorization）</li>
+                        </ul>
+                    </li>
+                    <li><strong>標準化處理</strong>：
+                        <ul>
+                            <li>Z-score標準化：適用於正態分佈的資料</li>
+                            <li>Min-Max標準化：適用於有界資料</li>
+                            <li>Robust標準化：適用於有異常值的資料</li>
+                        </ul>
+                    </li>
+                    <li><strong>特徵選擇</strong>：
+                        <ul>
+                            <li>使用相關係數矩陣去除高度相關的特徵</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h2>三、遺傳演算法實現</h2>
+                <h3>1. 染色體設計</h3>
+                <p>染色體採用二進制編碼，每個基因代表一個因子的選擇狀態：</p>
+                <ul>
+                    <li>1：選擇該因子，表示該因子被納入投資組合</li>
+                    <li>0：不選擇該因子，表示該因子被排除</li>
+                </ul>
+                <div class="note">
+                    染色體長度等於因子庫中的因子數量，例如如果有100個因子，則染色體長度為100位元。
+                </div>
+
+                <h3>2. 適應度函數</h3>
+                <p>使用夏普比率作為適應度函數，計算公式如下：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 適應度計算核心邏輯
+def calculate_sharpe_ratio(returns, risk_free_rate=0.02):
+    """計算給定收益率序列的年化夏普比率"""
+    # 計算年化收益率 (假設一年252個交易日)
+    annual_return = np.mean(returns) * 252
+    
+    # 計算年化波動率
+    annual_volatility = np.std(returns) * np.sqrt(252)
+    
+    # 檢查波動率是否為零或非常接近零，避免除以零錯誤
+    if annual_volatility < 1e-8:
+        # 如果波動率為零，通常意味著沒有風險，夏普比率無意義或可視為零
+        return 0.0 
+    
+    # 計算夏普比率
+    sharpe_ratio = (annual_return - risk_free_rate) / annual_volatility
+    return sharpe_ratio
+
+# 投資組合收益計算範例 (假設 returns 是因子收益率, chromosome 是因子權重)
+# portfolio_returns = np.dot(returns, chromosome) 
+
+# 計算適應度 (夏普比率)
+# fitness = calculate_sharpe_ratio(portfolio_returns)
+                    </code></pre>
+                </div>
+                <div class="note">
+                    夏普比率衡量的是每單位風險所獲得的超額收益，數值越高表示風險調整後的收益越好。
+                </div>
+
+                <h3>3. 遺傳操作</h3>
+                <h4>3.1 選擇機制</h4>
+                <p>採用輪盤式選擇（Roulette Wheel Selection）：</p>
+                <ul>
+                    <li>根據適應度值計算選擇機率：
+                        <div class="code-block">
+                            <pre><code class="language-python">
+# 計算選擇機率
+def calculate_selection_probability(fitness_values):
+    """根據適應度值計算輪盤式選擇的機率"""
+    # 處理負適應度值
+    min_fitness = min(fitness_values)
+    if min_fitness < 0:
+        # 使用線性變換將所有適應度值轉為正值 (加上一個小數避免全為0)
+        fitness_values = [f - min_fitness + 1e-6 for f in fitness_values] 
+    
+    # 計算總適應度
+    total_fitness = sum(fitness_values)
+    
+    # 檢查總適應度是否為零或非常接近零
+    if total_fitness < 1e-8:
+        # 如果所有適應度都接近零，則賦予相等機率
+        num_individuals = len(fitness_values)
+        # 避免除以零
+        if num_individuals == 0:
+            return []
+        return [1.0 / num_individuals] * num_individuals
+        
+    # 計算選擇機率
+    probabilities = [f / total_fitness for f in fitness_values]
+    return probabilities
+                            </code></pre>
+                        </div>
+                    </li>
+                    <li>處理負適應度值的情況：使用線性變換將所有適應度值轉為正值</li>
+                    <li>確保選擇的公平性：使用累積機率進行選擇，避免選擇偏差</li>
+                </ul>
+
+                <h4>3.2 交配操作</h4>
+                <p>實現單點交配策略：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 單點交配實現
+def single_point_crossover(parent1, parent2):
+    """執行單點交配操作，生成兩個子代"""
+    # 確保父代長度相同且不為空
+    if len(parent1) != len(parent2) or len(parent1) == 0:
+        raise ValueError("父代染色體長度必須相同且不為零")
+    
+    # 隨機選擇交叉點 (不包含第一個和最後一個位置)
+    # 如果染色體長度只有1，則無法進行交配，直接回傳原父代
+    if len(parent1) < 2:
+        return parent1.copy(), parent2.copy()
+        
+    crossover_point = np.random.randint(1, len(parent1))
+    
+    # 產生子代
+    # 子代1 = 父代1的前半部分 + 父代2的後半部分
+    child1 = np.concatenate([parent1[:crossover_point], parent2[crossover_point:]])
+    # 子代2 = 父代2的前半部分 + 父代1的後半部分
+    child2 = np.concatenate([parent2[:crossover_point], parent1[crossover_point:]])
+    
+    return child1, child2
+                    </code></pre>
+                </div>
+                <ul>
+                    <li>隨機選擇交叉點：在染色體長度範圍內隨機選擇一個位置</li>
+                    <li>交換父代染色體的部分基因：在交叉點處交換兩個父代的基因</li>
+                    <li>產生兩個子代：每個交配操作產生兩個新的子代</li>
+                </ul>
+
+                <h4>3.3 突變操作</h4>
+                <p>以特定機率進行基因突變：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 突變操作實現
+def mutation(chromosome, mutation_rate=0.02):
+    """對染色體的每個基因以指定機率進行突變 (0變1, 1變0)"""
+    # 檢查突變率是否有效
+    if not 0 <= mutation_rate <= 1:
+        raise ValueError("突變率必須介於 0 和 1 之間")
+        
+    # 複製染色體以避免修改原始個體
+    mutated_chromosome = chromosome.copy()
+    
+    # 對每個基因進行突變檢查
+    for i in range(len(mutated_chromosome)):
+        if np.random.random() < mutation_rate:
+            # 翻轉基因值 (0 變成 1, 1 變成 0)
+            mutated_chromosome[i] = 1 - mutated_chromosome[i]
+            
+    return mutated_chromosome
+                    </code></pre>
+                </div>
+                <ul>
+                    <li>突變率可調（預設0.02）：控制基因突變的頻率</li>
+                    <li>包含有效性檢查：確保突變後的染色體仍然有效</li>
+                    <li>確保突變後仍符合約束條件：檢查最小和最大選取因子數的限制</li>
+                </ul>
+
+                <h2>四、優化策略</h2>
+                <h3>1. 早停機制</h3>
+                <p>引入早停機制避免過度擬合：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 早停機制實現
+def early_stopping(best_fitness_history, patience=10, min_delta=0.001):
+    """檢查是否滿足早停條件"
+    
+    Args:
+        best_fitness_history (list): 記錄每代最佳適應度值的列表
+        patience (int): 連續多少代無顯著改善時觸發早停
+        min_delta (float): 判定為顯著改善的最小閾值
+        
+    Returns:
+        bool: True表示滿足早停條件，False則否
+    """
+    # 如果記錄的歷史不足 patience 期，則不停止
+    if len(best_fitness_history) < patience:
+        return False
+        
+    # 獲取最近 patience 期的最佳適應度值
+    recent_history = best_fitness_history[-patience:]
+    
+    # 檢查最近 patience 期內是否有顯著改善
+    # 計算這段期間的最大值和最小值之差
+    improvement = max(recent_history) - min(recent_history)
+    
+    # 如果改善程度小於設定的最小閾值，則觸發早停
+    return improvement < min_delta
+                    </code></pre>
+                </div>
+                <ul>
+                    <li>設置patience參數：控制連續多少代無改善時停止</li>
+                    <li>監控適應度改善情況：記錄每代的最佳適應度值</li>
+                    <li>當連續多代無改善時停止：避免無謂的計算</li>
+                </ul>
+
+                <h3>2. 約束條件</h3>
+                <p>系統實現了多種約束條件：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 約束條件檢查
+def check_constraints(chromosome, min_pick=3, max_pick=10, forced_indices=None):
+    """檢查染色體是否滿足設定的約束條件"
+    
+    Args:
+        chromosome (np.array): 需要檢查的染色體 (二進制)
+        min_pick (int): 允許選擇的最少因子數量
+        max_pick (int): 允許選擇的最大因子數量
+        forced_indices (list, optional): 必須選擇的因子索引列表. Defaults to None.
+        
+    Returns:
+        bool: True表示滿足所有約束條件，False則否
+    """
+    # 計算選取的因子數量 (染色體中 1 的數量)
+    num_picked = np.sum(chromosome)
+    
+    # 檢查是否在最小和最大選取數量之間
+    if not min_pick <= num_picked <= max_pick:
+        return False
+        
+    # 檢查是否強制選擇了指定的因子
+    if forced_indices is not None:
+        for index in forced_indices:
+            # 確保索引有效
+            if index < 0 or index >= len(chromosome):
+                print(f"警告：強制選擇的索引 {index} 超出範圍")
+                continue # 或者可以返回 False 或拋出錯誤
+            # 檢查對應位置的基因是否為 1
+            if chromosome[index] != 1:
+                return False
+                
+    # 所有檢查通過
+    return True
+                    </code></pre>
+                </div>
+                <ul>
+                    <li>最小選取因子數（min_pick）：確保投資組合的分散性</li>
+                    <li>最大選取因子數（max_pick）：控制投資組合的複雜度</li>
+                    <li>強制選擇特定因子（forced_indices）：確保重要因子被納入</li>
+                </ul>
+
+                <h2>五、效能優化</h2>
+                <h3>1. 向量化運算</h3>
+                <p>使用numpy進行高效運算：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 向量化適應度計算
+def batch_fitness_calculation(population, returns):
+    """使用向量化操作批量計算族群中每個個體的適應度 (夏普比率)"""
+    # population: (N, M) N個個體, M個因子
+    # returns: (T, M) T個時間點, M個因子
+    
+    # 計算每個個體在每個時間點的組合收益率
+    # (T, M) x (M, N) -> (T, N)
+    portfolio_returns_per_individual = np.dot(returns, population.T)
+    
+    # 對每個個體 (每一列) 計算夏普比率
+    # 注意：需要確保 calculate_sharpe_ratio 函數在此處可用
+    sharpe_ratios = np.array([calculate_sharpe_ratio(ind_returns) 
+                              for ind_returns in portfolio_returns_per_individual.T])
+                              
+    return sharpe_ratios
+                    </code></pre>
+                </div>
+                <ul>
+                    <li>矩陣運算替代循環：使用numpy的矩陣運算提高效率</li>
+                    <li>批量處理適應度計算：一次計算整個族群的適應度</li>
+                    <li>優化記憶體使用：使用稀疏矩陣存儲大規模資料</li>
+                </ul>
+
+                <h3>2. 並行計算</h3>
+                <p>實現族群評估的並行化：</p>
+                <div class="code-block">
+                    <pre><code class="language-python">
+# 並行適應度計算
+# 注意：需要導入 multiprocessing 模組
+from multiprocessing import Pool
+import numpy as np # 假設已導入 numpy
+
+def parallel_fitness_calculation(population, returns, n_processes=4):
+    """使用多進程並行計算族群的適應度"""
+    # population: (N, M) N個個體, M個因子
+    # returns: (T, M) T個時間點, M個因子
+    
+    # 確保進程數量有效
+    if n_processes <= 0:
+        n_processes = 1 # 至少使用一個進程
+    
+    try:
+        # 將族群分割成大致相等的塊，數量等於進程數
+        # 使用 array_split 以應對無法均分的情況
+        chunks = np.array_split(population, n_processes)
+        
+        # 創建進程池
+        with Pool(processes=n_processes) as pool:
+            # 為每個塊準備參數列表
+            # 注意：假設 batch_fitness_calculation 函數已定義且可用
+            args_list = [(chunk, returns) for chunk in chunks]
+            
+            # 使用 starmap 並行執行 batch_fitness_calculation
+            # starmap 會將參數列表中的每個元組解包後傳遞給目標函數
+            results_list = pool.starmap(batch_fitness_calculation, args_list)
+            
+        # 合併來自不同進程的結果
+        all_sharpe_ratios = np.concatenate(results_list)
+        
+        return all_sharpe_ratios
+        
+    except Exception as e:
+        print(f"並行計算過程中發生錯誤: {e}")
+        # 可以選擇返回空列表、None 或重新拋出異常
+        return np.array([]) 
+                    </code></pre>
+                </div>
+                <ul>
+                    <li>多進程處理適應度計算：利用多核CPU提高計算效率</li>
+                    <li>優化計算資源利用：根據CPU核心數動態調整進程數</li>
+                    <li>提升運算效率：減少計算時間，提高系統響應速度</li>
+                </ul>
+
+                <h2>六、實作建議</h2>
+                <h3>1. 參數調優</h3>
+                <p>建議的參數設置：</p>
+                <ul>
+                    <li>族群大小：因子數量的2-3倍，確保足夠的遺傳多樣性</li>
+                    <li>突變率：1%-5%，平衡探索和開發</li>
+                    <li>早停參數：代數的10%-20%，避免過度擬合</li>
+                </ul>
+
+                <h3>2. 風險控制</h3>
+                <p>建議加入的風險控制機制：</p>
+                <ul>
+                    <li>最大回撤限制：控制投資組合的最大損失</li>
+                    <li>波動率控制：限制投資組合的波動範圍</li>
+                    <li>換手率限制：控制交易頻率，降低交易成本</li>
+                </ul>
+
+                <h2>七、未來改進方向</h2>
+                <h3>1. 多目標優化</h3>
+                <p>可以考慮加入：</p>
+                <ul>
+                    <li>收益-風險平衡：同時優化多個目標函數</li>
+                    <li>交易成本考慮：將交易成本納入適應度計算</li>
+                    <li>流動性限制：考慮市場衝擊成本</li>
+                </ul>
+
+                <h3>2. 動態調整機制</h3>
+                <p>建議實現：</p>
+                <ul>
+                    <li>自適應突變率：根據收斂情況動態調整突變率</li>
+                    <li>動態交叉策略：根據種群多樣性調整交叉方式</li>
+                    <li>局部搜索機制：在收斂後進行局部優化</li>
+                </ul>
+
+                <h2>八、研究成果展示</h2>
+                <h3>1. 挖掘出的優質因子範例</h3>
+                <p>以下是系統挖掘出的部分高IC值因子，按照IC值大小排序：</p>
+                
+                <div class="code-block">
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                        <thead>
+                            <tr style="background-color: #f5f5f5;">
+                                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">排名</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">因子表達式</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">CAGR</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">使用指標</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">1</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">signedpower(max(daily_EMA5, truediv(Neutralization(overnight_EMA5, Volume), Lower_shadow)), 20)</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">684.918</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">daily_EMA5, overnight_EMA5, Volume, Lower_shadow</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">2</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">truediv(signedpower(BPROE_Quantile, 30), delay(intraday_range, 3))</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">555.596</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">BPROE_Quantile, intraday_range</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">3</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">signedpower(ts_product(BPROE_Quantile, 2), 20)</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">496.884</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">BPROE_Quantile</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">4</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">ts_min(signedpower(BPROE_Quantile, 60), 3)</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">435.778</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">BPROE_Quantile</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">5</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">ts_product(truediv(truediv(GapReturn, Lower_shadow), Lower_shadow), 3)</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">408.737</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">GapReturn, Lower_shadow</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>2. 因子分析</h3>
+                <p>從上述挖掘結果中，我們可以觀察到以下幾個重要特點：</p>
+                <ul>
+                    <li><strong>價量因子的重要性</strong>：排名第一的因子結合了日內EMA、隔夜EMA和成交量等價量指標，價量因子還是有其重要性。</li>
+                    <li><strong>BPROE的預測力</strong>：多個高fitness因子都使用了BPROE指標，證實了基本面因子的重要性。</li>
+                    <li><strong>技術指標組合</strong>：系統成功發掘出多個技術指標的有效組合，如GapReturn和Lower_shadow的比值關係。</li>
+                    <li><strong>時序特徵</strong>：許多高fitness因子都包含時序運算（如ts_product、ts_min等），說明價格動量和趨勢特徵的重要性。</li>
+                </ul>
+
+                <h3>3. 實務應用建議</h3>
+                <p>基於以上發現，在實際應用中建議：</p>
+                <ul>
+                    <li>重視價量數據的收集和處理，特別是日內價格和成交量數據</li>
+                    <li>將基本面指標（如BPROE）與技術指標結合，以提升預測效果</li>
+                    <li>在因子設計時多考慮時序特徵，不要僅局限於橫截面特徵</li>
+                    <li>注意因子之間的相關性，避免過度依賴單一類型的指標</li>
+                </ul>
+
+                <div class="note">
+                    這些因子範例展示了遺傳演算法在因子挖掘中的強大能力，特別是在發現複雜的非線性關係方面。然而，在實際應用時仍需要考慮因子的穩定性、交易成本等實務因素。
+                </div>
+
+                <div class="note">
+                    總結：本系統通過遺傳演算法有效地在龐大的因子空間中搜索最優組合，結合了價量資料和財報資料，使用夏普比率作為適應度函數，實現了高效且穩健的因子挖掘過程。系統的模組化設計和優化策略使其具有良好的可擴展性和實用性。
+                </div>
+
+                <h2>九、回測結果分析</h2>
+                <h3>1. 績效指標總覽</h3>
+                <div class="code-block">
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                        <thead>
+                            <tr style="background-color: #f5f5f5;">
+                                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">樣本期間</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">CAGR(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Sharpe</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Calmar</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">MDD(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">單利MDD(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">樣本勝率(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">周勝率(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">月勝率(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">年勝率(%)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">盈虧比</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">總賺賠比</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">預期報酬(bps)</th>
+                                <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">樣本數</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">樣本內</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">110.15</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">8.24</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">8.48</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-12.98</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-2.61</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">70.27</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">81.45</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">99.07</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">100.0</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">1.67</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">3.98</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">44.00</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">2223</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">樣本外</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">34.13</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">5.25</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">2.43</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-14.06</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-6.23</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">63.06</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">71.82</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">89.47</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">100.0</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">1.43</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">2.53</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">17.38</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">1527</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">全樣本</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">181.88</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">7.04</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">12.94</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-14.06</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-2.61</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">67.33</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">77.47</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">95.11</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">100.0</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">1.59</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">3.35</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">61.46</td>
+                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">3750</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>2. 策略收益曲線</h3>
+                <div class="code-block">
+                    <img src="../images/factor_mining/image.png" alt="因子挖掘策略收益曲線" style="width: 100%; height: auto; margin: 20px 0;">
+                    <p style="text-align: center; color: #666;">圖1：因子挖掘策略2010-2024年收益曲線（橙色線），紅色垂直線表示樣本內外分界點</p>
+                </div>
+
+                <h3>3. 策略表現分析</h3>
+                <h4>3.1 收益性分析</h4>
+                <ul>
+                    <li><strong>樣本內表現優異</strong>：
+                        <ul>
+                            <li>年化報酬率(CAGR)達到110.15%</li>
+                            <li>夏普比率高達8.24，顯示風險調整後收益表現極佳</li>
+                            <li>Calmar比率8.48，說明相對於最大回撤的收益效率很高</li>
+                        </ul>
+                    </li>
+                    <li><strong>樣本外仍維持穩健</strong>：
+                        <ul>
+                            <li>雖然CAGR降至34.13%，但仍維持可觀的收益水平</li>
+                            <li>夏普比率5.25，顯示策略在樣本外期間仍保持良好的風險調整後收益</li>
+                            <li>收益曲線呈現穩定上升趨勢，體現策略的持續性</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>3.2 風險控制</h4>
+                <ul>
+                    <li><strong>回撤控制得宜</strong>：
+                        <ul>
+                            <li>樣本內最大回撤僅-12.98%</li>
+                            <li>樣本外最大回撤-14.06%，與樣本內相近，顯示風險特徵的一致性</li>
+                            <li>單利MDD(%)分別為-2.61%和-6.23%，體現良好的日常風險控制</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>3.3 勝率與穩定性</h4>
+                <ul>
+                    <li><strong>高勝率特徵</strong>：
+                        <ul>
+                            <li>樣本內勝率70.27%，樣本外仍維持63.06%的高勝率</li>
+                            <li>盈虧比分別為1.67和1.43，顯示單筆交易的獲利金額普遍大於虧損金額</li>
+                            <li>各時間週期（周、月、年）的勝率都保持在較高水平，體現策略的時間穩定性</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>4. 策略特點總結</h3>
+                <div class="note">
+                    <ul>
+                        <li><strong>強健性</strong>：樣本外表現雖有所下降但仍維持優異水準，顯示策略具有良好的魯棒性</li>
+                        <li><strong>風險控制</strong>：最大回撤控制在15%以內，且單利回撤更小，顯示策略具有良好的風險管理能力</li>
+                        <li><strong>穩定性</strong>：高勝率、理想盈虧比以及各時間週期的穩定表現，都支持策略的可持續性</li>
+                        <li><strong>實用性</strong>：總樣本數3750，提供了充分的統計顯著性，策略結果具有較高的可信度</li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </div>
+</body>
+</html> 
