@@ -3,34 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用 Alphalens 剖析因子表現，價值因子篇 - Roger's Portfolio</title>
-    <link rel="stylesheet" href="../styles.css">
+    <title>用 Alphalens 剖析因子表現，價值因子篇 - Roger Chen</title>
+    <link rel="stylesheet" href="../styles/main.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .sidebar {
+            width: 300px;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 2rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-info h1 {
+            margin: 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .profile-info .subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .social-icons a {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            margin-top: 2rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 1rem;
+            gap: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .post-header {
+            margin-bottom: 2rem;
+        }
+
+        .post-header h1 {
+            margin: 0 0 1rem 0;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .post-meta {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        article {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        article h3 {
+            margin: 2rem 0 1rem;
+            color: #333;
+        }
+
+        article p {
+            margin: 1rem 0;
+        }
+
+        article ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 300px;
+            padding: 1rem 2rem;
+            background-color: white;
+            text-align: right;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .footer-links {
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="profile-header">
+    <div class="sidebar">
+        <div class="profile-info">
             <div class="avatar">
                 <img src="../assets/profile.jpg" alt="Roger Chen">
             </div>
             <h1>Roger Chen</h1>
             <p class="subtitle">Quantitative Trading Intern @ President Securities Corp | M.S. student @ NCCU</p>
             <div class="social-icons">
-                <a href="https://github.com/roger2389" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://medium.com/@aad53325489" target="_blank" aria-label="Medium"><i class="fab fa-medium"></i></a>
+                <a href="https://github.com/roger2389" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/sheng-hua-chen-8b735b2a5/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:aad53325489@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://drive.google.com/file/d/1Qsm1zQCbbe_qtUKkvVdzRn6InA94txsg/view?usp=drive_link" target="_blank"><i class="fas fa-file-alt"></i></a>
             </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="../posts.html"><i class="fas fa-pen"></i> Post</a></li>
-            </ul>
-        </nav>
-    </header>
+        <div class="nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="../posts.html"><i class="fas fa-pen"></i> Post</a>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 - 2025 Roger Chen</p>
+            <div class="footer-links">
+                <span>Built with Hugo</span>
+                <span>Theme Stack</span>
+            </div>
+        </div>
+    </div>
 
-    <main>
+    <div class="main-content">
         <section class="post-content">
             <div class="post-header">
                 <h1>用 Alphalens 剖析因子表現，價值因子篇</h1>
@@ -113,15 +263,6 @@
                 <p>整體而言，本文展示了從單一價值因子分析到綜合因子的構建與回測的完整流程。在未來的應用中，我們可以考慮引入更多價值因子及不同的權重計算方法，以提升加權融合的效益，並納入滑價、手續費等交易成本的考量，以進一步檢視策略的真實可行性。透過這些改進，多因子策略將更能應對市場波動，在動態的市場環境中持續創造價值。</p>
             </article>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 - 2025 Roger Chen</p>
-        <div class="footer-links">
-            <span>Built with Hugo</span>
-            <span>Theme <strong>Stack</strong></span>
-        </div>
-    </footer>
-    
+    </div>
 </body>
 </html> 
