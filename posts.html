@@ -23,12 +23,87 @@
             position: fixed;
             height: 100vh;
             overflow-y: auto;
+            z-index: 1000;
         }
 
         .main-content {
             flex: 1;
             margin-left: 300px;
             padding: 2rem;
+        }
+
+        /* 新增漢堡選單按鈕樣式 */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            background: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-toggle i {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        /* 手機版響應式設計 */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                padding: 1rem;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateY(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                margin-top: 4rem;
+                padding: 1rem;
+            }
+
+            .profile-info {
+                margin-bottom: 1rem;
+            }
+
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+
+            .footer {
+                position: relative;
+                width: 100%;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .post-list {
+                padding: 0 1rem;
+            }
+
+            .post-item {
+                margin-bottom: 1rem;
+            }
         }
 
         .avatar {
@@ -150,6 +225,11 @@
     </style>
 </head>
 <body>
+    <!-- 新增漢堡選單按鈕 -->
+    <button class="menu-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <div class="sidebar">
         <div class="profile-info">
             <div class="avatar">
@@ -203,5 +283,34 @@
             </article>
         </div>
     </div>
+
+    <!-- 在 body 結束標籤前加入 JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+
+            // 點擊側邊欄外的區域時關閉選單
+            document.addEventListener('click', function(event) {
+                if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // 點擊導航連結時關閉選單
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html> 
