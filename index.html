@@ -203,82 +203,126 @@
             .profile-header h1 {
                 font-size: 1.8rem;
                 padding: 0 1rem;
+                line-height: 1.3;
             }
 
             .subtitle {
                 font-size: 0.9rem;
                 padding: 0 1rem;
+                line-height: 1.5;
             }
 
             .section {
-                padding: 1rem;
-                margin: 1rem;
+                padding: 1.2rem;
+                margin: 1rem 0.5rem;
             }
 
             nav ul {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 0 0.5rem;
             }
 
             nav a {
-                display: block;
-                width: 100%;
-                text-align: center;
+                display: inline-block;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
             }
 
             .item-header {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.3rem;
             }
 
             .item-period {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
+                color: var(--text-secondary);
+                margin-bottom: 0.3rem;
             }
 
             .item-title {
                 font-size: 1.1rem;
+                line-height: 1.4;
+            }
+
+            .item-subtitle {
+                font-size: 0.9rem;
+                line-height: 1.4;
+                margin-bottom: 0.5rem;
             }
 
             .education-item, .experience-item {
                 padding: 1rem;
+                margin-bottom: 1rem;
             }
 
             .courses {
-                font-size: 0.85rem;
-            }
-
-            .certifications li {
-                display: block;
-                margin-right: 0;
-                margin-bottom: 0.5rem;
-            }
-
-            .about-content {
-                font-size: 1rem;
-                padding: 0 0.5rem;
+                font-size: 0.9rem;
+                line-height: 1.5;
+                padding: 0.8rem;
             }
 
             .social-icons {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 1rem;
-                padding: 0.5rem;
+                margin-top: 1rem;
             }
 
             .social-icons a {
                 font-size: 1.3rem;
+                margin: 0 0.4rem;
             }
 
             .avatar {
                 width: 120px;
                 height: 120px;
             }
+        }
+
+        /* 更小螢幕的優化 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.8rem;
+            }
+
+            .profile-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                font-size: 0.85rem;
+            }
+
+            .section {
+                padding: 1rem;
+                margin: 0.8rem 0.3rem;
+            }
 
             .section h2 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
+                font-size: 1.4rem;
+            }
+
+            .item-title {
+                font-size: 1rem;
+            }
+
+            .item-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .courses {
+                font-size: 0.85rem;
+                padding: 0.7rem;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .social-icons a {
+                font-size: 1.2rem;
+                margin: 0 0.3rem;
             }
         }
 
