@@ -197,7 +197,7 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 0.8rem;
+                padding: 1rem;
             }
 
             .profile-header h1 {
@@ -213,7 +213,7 @@
             }
 
             .section {
-                padding: 1.2rem 0.8rem;
+                padding: 1.2rem;
                 margin: 1rem 0.5rem;
             }
 
@@ -277,65 +277,12 @@
                 width: 120px;
                 height: 120px;
             }
-
-            .about-content {
-                font-size: 0.95rem;
-                line-height: 1.6;
-                padding: 0;
-            }
-
-            .about-content p {
-                margin-bottom: 1rem;
-                text-align: left;
-                padding: 0 0.3rem;
-            }
-
-            .experience-highlights,
-            .community-involvement,
-            .skills-list {
-                margin: 0.8rem 0;
-                padding: 0 0.3rem;
-            }
-
-            .experience-highlights li,
-            .community-involvement li,
-            .skills-list li {
-                padding-left: 1rem;
-                margin-bottom: 0.8rem;
-                line-height: 1.5;
-                font-size: 0.95rem;
-                position: relative;
-            }
-
-            .experience-highlights li:before,
-            .community-involvement li:before,
-            .skills-list li:before {
-                content: "•";
-                position: absolute;
-                left: 0;
-                color: var(--primary-color);
-            }
-
-            .career-objective {
-                padding: 1rem;
-                margin: 1rem 0.3rem;
-                line-height: 1.6;
-                font-size: 0.95rem;
-                background: var(--bg-secondary);
-                border-radius: 8px;
-                border-left: 3px solid var(--primary-color);
-            }
-
-            .section h2 {
-                font-size: 1.4rem;
-                margin-bottom: 1rem;
-                padding: 0 0.3rem 0.5rem 0.3rem;
-            }
         }
 
+        /* 更小螢幕的優化 */
         @media (max-width: 480px) {
             .container {
-                padding: 0.5rem;
+                padding: 0.8rem;
             }
 
             .profile-header h1 {
@@ -347,13 +294,12 @@
             }
 
             .section {
-                padding: 1rem 0.6rem;
+                padding: 1rem;
                 margin: 0.8rem 0.3rem;
             }
 
             .section h2 {
-                font-size: 1.3rem;
-                padding: 0 0.2rem 0.4rem 0.2rem;
+                font-size: 1.4rem;
             }
 
             .item-title {
@@ -378,33 +324,6 @@
                 font-size: 1.2rem;
                 margin: 0 0.3rem;
             }
-
-            .about-content {
-                font-size: 0.92rem;
-            }
-
-            .about-content p {
-                padding: 0 0.2rem;
-            }
-
-            .experience-highlights,
-            .community-involvement,
-            .skills-list {
-                padding: 0 0.2rem;
-            }
-
-            .experience-highlights li,
-            .community-involvement li,
-            .skills-list li {
-                font-size: 0.92rem;
-                margin-bottom: 0.7rem;
-            }
-
-            .career-objective {
-                padding: 0.8rem;
-                margin: 0.8rem 0.2rem;
-                font-size: 0.92rem;
-            }
         }
 
         .certifications ul {
@@ -427,15 +346,11 @@
             font-size: 1.1rem;
             line-height: 1.8;
             color: var(--text-primary);
-            word-break: break-word;
-            word-wrap: break-word;
-            hyphens: auto;
         }
 
         .about-content p {
             margin-bottom: 1.5rem;
             text-align: justify;
-            text-justify: inter-word;
         }
 
         .experience-highlights,
@@ -475,63 +390,10 @@
         @media (max-width: 768px) {
             .about-content {
                 font-size: 1rem;
-                line-height: 1.6;
-                padding: 0 0.5rem;
             }
-
-            .about-content p {
-                margin-bottom: 1.2rem;
-                text-align: left;
-                word-spacing: normal;
-            }
-
-            .experience-highlights li,
-            .community-involvement li,
-            .skills-list li {
-                padding-left: 1.2rem;
-                margin-bottom: 0.6rem;
-                line-height: 1.4;
-                font-size: 0.95rem;
-            }
-
+            
             .career-objective {
                 padding: 1rem;
-                line-height: 1.5;
-                font-size: 0.95rem;
-                margin-top: 1.5rem;
-            }
-
-            .experience-highlights,
-            .community-involvement,
-            .skills-list {
-                margin-bottom: 1.2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .about-content {
-                font-size: 0.95rem;
-                line-height: 1.5;
-            }
-
-            .about-content p {
-                margin-bottom: 1rem;
-            }
-
-            .experience-highlights li,
-            .community-involvement li,
-            .skills-list li {
-                padding-left: 1rem;
-                margin-bottom: 0.5rem;
-                line-height: 1.4;
-                font-size: 0.9rem;
-            }
-
-            .career-objective {
-                padding: 0.8rem;
-                line-height: 1.4;
-                font-size: 0.9rem;
-                margin-top: 1.2rem;
             }
         }
     </style>
