@@ -18,6 +18,17 @@
             --link-hover-color: #8B7355;
         }
 
+        [data-theme="dark"] {
+            --primary-color: #1565C0;
+            --secondary-color: #0D47A1;
+            --text-primary: #FAFAFA;
+            --text-secondary: #B8C0CC;
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --link-color: #1565C0;
+            --link-hover-color: #0D47A1;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -42,6 +53,11 @@
             color: white;
             padding: 2rem 0;
             margin-bottom: 3rem;
+        }
+
+        [data-theme="dark"] header {
+            background: linear-gradient(135deg, #232a34 0%, #10151b 100%);
+            color: var(--text-primary);
         }
 
         .profile-header {
@@ -96,6 +112,10 @@
             padding: 1rem 0;
         }
 
+        [data-theme="dark"] nav {
+            background: rgba(30, 30, 30, 0.95);
+        }
+
         nav ul {
             display: flex;
             justify-content: center;
@@ -124,6 +144,11 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
+        [data-theme="dark"] .section {
+            background: #232a34;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        }
+
         .section h2 {
             color: var(--primary-color);
             font-size: 1.8rem;
@@ -131,6 +156,11 @@
             border-bottom: 2px solid var(--secondary-color);
             padding-bottom: 0.5rem;
             display: inline-block;
+        }
+
+        [data-theme="dark"] .section h2 {
+            color: #FAFAFA;
+            border-bottom: 2px solid #B8C0CC;
         }
 
         .education-item, .experience-item {
@@ -612,9 +642,51 @@
         .project-category:first-of-type {
             margin-top: 1rem;
         }
+
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-switch i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        [data-theme="dark"] .project-category {
+            color: #FAFAFA;
+            border-bottom: 2px solid #B8C0CC;
+        }
+        [data-theme="dark"] .project-header h3 {
+            color: #FAFAFA;
+        }
+        [data-theme="dark"] .tech-tag {
+            color: #B8C0CC;
+            background: rgba(184,192,204,0.08);
+        }
     </style>
 </head>
 <body>
+    <button class="theme-switch" id="themeSwitch" title="切換深色模式">
+        <i class="fas fa-moon"></i>
+    </button>
     <header>
         <div class="profile-header">
             <div class="avatar">
@@ -947,6 +1019,43 @@
             // 顯示成功訊息
             document.getElementById('formSuccess').textContent = '請使用您的郵件客戶端發送訊息。';
             document.getElementById('contactForm').reset();
+        });
+
+        // 深色模式切換
+        const themeSwitch = document.getElementById('themeSwitch');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // 檢查本地存儲中的主題設置
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeSwitch.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeSwitch.addEventListener('click', function() {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeSwitch.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeSwitch.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // 監聽系統主題變化
+        prefersDarkScheme.addListener(function(e) {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeSwitch.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    themeSwitch.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            }
         });
     </script>
 </body>
