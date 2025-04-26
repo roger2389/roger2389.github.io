@@ -514,6 +514,104 @@
                 padding: 1rem;
             }
         }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-header h3 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .project-links a {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: rgba(210, 180, 140, 0.1);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 1.2rem;
+            }
+
+            .project-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .tech-tag {
+                font-size: 0.8rem;
+                padding: 0.2rem 0.6rem;
+            }
+        }
+
+        .project-category {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .project-category:first-of-type {
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -590,6 +688,183 @@
                 <p class="career-objective">
                     My career objective is to become a distinguished Quantitative Researcher and Trader, combining rigorous academic research with practical trading implementation. I am particularly interested in roles that allow me to develop innovative systematic trading strategies while contributing to the advancement of quantitative finance methodologies.
                 </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Projects</h2>
+            
+            <h3 class="project-category">交易策略</h3>
+            <div class="projects-grid">
+                <!-- 專案 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>合成雙動能策略</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/Composite-Dual-Momentum" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>結合絕對動能和相對動能的資產配置策略，通過比較不同資產類別的動能表現來優化投資組合。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Momentum</span>
+                        <span class="tech-tag">Asset Allocation</span>
+                        <span class="tech-tag">Portfolio Optimization</span>
+                    </div>
+                </div>
+
+                <!-- 專案 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>CB-Hedge 日內放空策略</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/CB-Hedge" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>基於 CatBoost 機器學習模型合成因子的日內放空策略，結合多個技術指標和市場情緒因子。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">CatBoost</span>
+                        <span class="tech-tag">Intraday Trading</span>
+                        <span class="tech-tag">Machine Learning</span>
+                    </div>
+                </div>
+
+                <!-- 專案 3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>因子挖掘系統</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/Stock-Futures-Portfolio" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="posts/factor-mining.html" title="詳細說明">
+                                <i class="fas fa-book"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>基於遺傳演算法的多因子選股策略研究，整合價量資料和財報資料。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Genetic Algorithm</span>
+                    </div>
+                </div>
+
+                <!-- 專案 4 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>台灣100指數增強策略</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/enhanced-indices" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="posts/taiwan-100-value-strategy.html" title="詳細說明">
+                                <i class="fas fa-book"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>針對台灣前100大市值股票開發的指數增強策略，結合基本面以及價量因子。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Value Investing</span>
+                        <span class="tech-tag">Index Enhancement</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="project-category">研報復現 - 擇時</h3>
+            <div class="projects-grid">
+                <!-- 專案 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>RSRS 市場擇時</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/RSRS-market-timing" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>基於阻力支撐相對強度（RSRS）的市場擇時策略。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Market Timing</span>
+                        <span class="tech-tag">Technical Analysis</span>
+                    </div>
+                </div>
+
+                <!-- 專案 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>LLT 斜率反轉擇時</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/LLT-Slope-Reversal" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>基於低延遲趨勢線（LLT）的斜率反轉擇時策略。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Trend Following</span>
+                        <span class="tech-tag">Technical Analysis</span>
+                    </div>
+                </div>
+
+                <!-- 專案 3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>ICU 擇時研究</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/ICU_Timing-Research" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>基於ICU指標的市場擇時策略研究，結合多個技術指標進行市場狀態判斷。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Market Regime</span>
+                        <span class="tech-tag">Technical Analysis</span>
+                    </div>
+                </div>
+
+                <!-- 專案 4 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>波動率與換手率擇時</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/roger2389/Volatility-and-Turnover" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-description">
+                        <p>基於波動率和換手率的市場擇時策略，研究市場情緒與價格波動的關係。</p>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Volatility</span>
+                        <span class="tech-tag">Market Sentiment</span>
+                    </div>
+                </div>
             </div>
         </section>
 
