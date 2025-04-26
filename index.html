@@ -449,6 +449,23 @@
             background: var(--link-hover-color);
         }
 
+        .submit-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .success-message {
+            color: #059669;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
         .contact-info {
             margin-top: 2rem;
             display: flex;
@@ -576,41 +593,28 @@
             </div>
         </section>
 
-        <section class="section contact-section">
+        <section class="section">
             <h2>Contact Me</h2>
-            <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
-
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>aad53325489@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Taipei, Taiwan</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>+886 928-079-381</span>
-                </div>
+            <div class="contact-section">
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" name="name" required>
+                        <div id="nameError" class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">電子郵件</label>
+                        <input type="email" id="email" name="email" required>
+                        <div id="emailError" class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">訊息</label>
+                        <textarea id="message" name="message" required></textarea>
+                        <div id="messageError" class="error-message"></div>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">傳送訊息</button>
+                    <div id="formSuccess" class="success-message"></div>
+                </form>
             </div>
         </section>
     </div>
@@ -621,5 +625,54 @@
             <span>Theme <strong>Stack</strong></span>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 重置錯誤訊息
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.getElementById('formSuccess').textContent = '';
+            
+            // 獲取表單數據
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // 表單驗證
+            let isValid = true;
+            
+            if (!name) {
+                document.getElementById('nameError').textContent = '請輸入姓名';
+                isValid = false;
+            }
+            
+            if (!email) {
+                document.getElementById('emailError').textContent = '請輸入電子郵件';
+                isValid = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = '請輸入有效的電子郵件地址';
+                isValid = false;
+            }
+            
+            if (!message) {
+                document.getElementById('messageError').textContent = '請輸入訊息';
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // 構建郵件內容
+            const subject = `來自 ${name} 的聯絡訊息`;
+            const body = `姓名：${name}%0D%0A電子郵件：${email}%0D%0A%0D%0A訊息內容：%0D%0A${message}`;
+            
+            // 打開郵件客戶端
+            window.location.href = `mailto:aad53325489@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // 顯示成功訊息
+            document.getElementById('formSuccess').textContent = '請使用您的郵件客戶端發送訊息。';
+            document.getElementById('contactForm').reset();
+        });
+    </script>
 </body>
 </html> 
